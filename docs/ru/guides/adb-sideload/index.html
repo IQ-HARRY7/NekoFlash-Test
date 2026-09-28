@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<title>ADB Sideload с Android без компьютера | NekoFlash</title>
+<meta name="description" content="Как передать ZIP-обновление через ADB Sideload с Android-телефона в Recovery по USB OTG с помощью NekoFlash без компьютера.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ff7a1a">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://ncorror.github.io/NekoFlash/ru/guides/adb-sideload/">
+<link rel="alternate" hreflang="ru" href="https://ncorror.github.io/NekoFlash/ru/guides/adb-sideload/">
+<link rel="alternate" hreflang="en" href="https://ncorror.github.io/NekoFlash/guides/adb-sideload/">
+<link rel="alternate" hreflang="x-default" href="https://ncorror.github.io/NekoFlash/guides/adb-sideload/">
+<link rel="icon" href="../../../assets/favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NekoFlash">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://ncorror.github.io/NekoFlash/ru/guides/adb-sideload/">
+<meta property="og:title" content="ADB Sideload с Android без компьютера">
+<meta property="og:description" content="Передача ZIP-обновления из Android в Recovery / ADB Sideload через USB OTG.">
+<meta property="og:image" content="https://ncorror.github.io/NekoFlash/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NekoFlash","item":"https://ncorror.github.io/NekoFlash/ru/"},{"@type":"ListItem","position":2,"name":"Руководства","item":"https://ncorror.github.io/NekoFlash/ru/guides/"},{"@type":"ListItem","position":3,"name":"ADB Sideload с Android","item":"https://ncorror.github.io/NekoFlash/ru/guides/adb-sideload/"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","headline":"ADB Sideload с Android без компьютера","description":"Передача update ZIP из Android-хоста в Recovery через ADB Sideload и USB OTG.","inLanguage":"ru","mainEntityOfPage":"https://ncorror.github.io/NekoFlash/ru/guides/adb-sideload/"}
+</script>
+</head>
+<body>
+<nav class="nav"><div class="wrap nav-inner"><a class="brand" href="../../"><span>Neko</span>Flash</a><div class="nav-links"><a href="../">Руководства</a><a href="https://github.com/Ncorror/NekoFlash">GitHub</a><a class="lang" href="../../../guides/adb-sideload/" hreflang="en">EN</a></div></div></nav>
+<main><div class="wrap article">
+<div class="breadcrumbs"><a href="../../">NekoFlash</a> / <a href="../">Руководства</a> / ADB Sideload</div>
+<h1>ADB Sideload с Android без компьютера</h1>
+<p class="lead">NekoFlash может отправить ZIP-обновление с Android-хоста, когда целевое устройство находится в Recovery / ADB Sideload. Этот режим отличается от обычного Android ADB.</p>
+
+<h2>1. Переведите целевое устройство в Sideload</h2>
+<p>Загрузитесь в recovery и выберите пункт, обычно называемый <strong>Apply update → Apply from ADB</strong>. Название зависит от recovery.</p>
+
+<h2>2. Подключите Android-хост</h2>
+<p>Соедините телефон или планшет с NekoFlash и целевое устройство кабелем USB OTG / USB-C с поддержкой передачи данных.</p>
+
+<h2>3. Выберите ZIP</h2>
+<p>Откройте вкладку Sideload в NekoFlash и выберите совместимый ZIP-файл обновления. Если файл сначала импортируется в рабочее хранилище NekoFlash, убедитесь, что свободного места достаточно.</p>
+
+<h2>4. Запустите передачу</h2>
+<p>Начните Sideload и не отключайте кабель. Проверку пакета и установку выполняет recovery на целевом устройстве.</p>
+
+<h2>Обычный ADB и ADB Sideload — разные режимы</h2>
+<p>Обычный режим ADB <code>DEVICE</code> и Recovery / Sideload работают по-разному. Если recovery ожидает Sideload, используйте соответствующий workflow NekoFlash.</p>
+
+<h2>Перед установкой обновления</h2>
+<p>Проверьте, что ZIP предназначен именно для вашей модели и используемого recovery. Успешная USB-передача не означает, что пакет совместим с устройством.</p>
+
+<div class="notice" style="margin:42px 0"><strong>Безопасность прежде всего.</strong> Проверяйте источник ZIP, модель устройства и требования recovery до начала установки.</div>
+<div class="actions"><a class="btn primary" href="https://github.com/Ncorror/NekoFlash/releases/latest">Скачать NekoFlash</a><a class="btn" href="https://github.com/Ncorror/NekoFlash">Исходный код</a></div>
+</div></main>
+<footer class="footer"><div class="wrap footer-inner"><div>© 2026 NekoFlash · Apache-2.0.</div><div><a href="https://github.com/Ncorror/NekoFlash">GitHub</a></div></div></footer>
+</body>
+</html>

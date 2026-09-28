@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">NekoFlash</string>
+    <string name="app_name_neko">Neko</string>
+    <string name="app_name_flash">Flash</string>
+    <string name="status_no_device">● Нет устройства</string>
+    <string name="language_dialog_title">Язык интерфейса</string>
+    <string name="language_system">Как в системе</string>
+    <string name="language_russian">Русский</string>
+    <string name="language_english">English</string>
+
+    <string name="status_connecting">● Подключение…</string>
+    <string name="status_fastboot">● FASTBOOT • BOOTLOADER</string>
+    <string name="status_adb_system">● ADB • SYSTEM</string>
+    <string name="status_adb_recovery">● ADB • RECOVERY</string>
+    <string name="status_adb_sideload">● ADB • SIDELOAD</string>
+    <string name="status_adb_unknown">● ADB • UNKNOWN</string>
+    <string name="status_fastboot_unknown">● FASTBOOT • UNKNOWN</string>
+    <string name="status_error">● Ошибка</string>
+    <string name="language_changed">Язык изменён. Интерфейс перезапущен.</string>
+    <string name="copy_upper">КОПИРОВАТЬ</string>
+    <string name="delete_upper">УДАЛИТЬ</string>
+    <string name="cancel_upper">ОТМЕНА</string>
+    <string name="close_upper">ЗАКРЫТЬ</string>
+    <string name="ok_understood_upper">ПОНЯТНО</string>
+    <string name="open_upper">ОТКРЫТЬ</string>
+    <string name="later_upper">ПОЗЖЕ</string>
+    <string name="dialog_usb_choose_title">Выберите USB-устройство</string>
+    <string name="dialog_file_choose_title">Выберите файл</string>
+    <string name="dialog_battery_title">Оптимизация батареи</string>
+    <string name="language_dialog_message">Выберите язык интерфейса приложения. Системный режим берёт язык из настроек Android.</string>
+    <string name="share_file_chooser">Отправить файл</string>
+    <string name="share_file_text">Файл: %1$s</string>
+    <string name="battery_optimization_already_disabled">✅ Оптимизация батареи уже отключена для приложения</string>
+    <string name="battery_optimization_message">Для долгой прошивки лучше отключить ограничения батареи для этого приложения. Это снижает риск, что Android остановит процесс во время передачи файла.</string>
+    <string name="battery_optimization_open_error">ОШИБКА: не удалось открыть настройки батареи: %1$s</string>
+    <string name="system_terminal_ready">[Система] Терминал готов…</string>
+    <string name="security_full_terminal_active">[Терминал] ADB/Fastboot-команды доступны напрямую.</string>
+    <string name="log_cleared">[Лог очищен]</string>
+    <string name="connection_status_header">=== СТАТУС ПОДКЛЮЧЕНИЯ ===</string>
+    <string name="state_label">Состояние: %1$s</string>
+    <string name="device_not_connected">Устройство: не подключено</string>
+    <string name="log_auto_saved">Лог сохраняется автоматически: %1$s</string>
+    <string name="log_folder_not_ready">папка логов ещё не создана</string>
+    <string name="debug_enabled">Подробный лог включён</string>
+    <string name="debug_disabled">Подробный лог выключен</string>
+    <string name="notif_fastboot_diagnostics">Диагностика Fastboot</string>
+    <string name="notif_updating_device">Обновление данных устройства</string>
+    <string name="error_no_fastboot">ОШИБКА: Нет Fastboot-соединения</string>
+    <string name="notif_fastboot_command">Команда Fastboot</string>
+    <string name="notif_adb_command">ADB-команда</string>
+    <string name="notif_executing">Выполняется: %1$s</string>
+    <string name="notif_flash_img">Прошивка .IMG</string>
+    <string name="notif_flashing_partition">Идет прошивка %1$s в раздел %2$s. Не отключайте кабель.</string>
+    <string name="notif_adb_sideload">ADB Sideload</string>
+    <string name="notif_sideload_sending">Идет отправка %1$s. Не отключайте кабель.</string>
+    <string name="error_no_adb">ОШИБКА: Нет ADB-соединения</string>
+    <string name="operation_error">ОШИБКА операции: %1$s</string>
+    <string name="operation_cancelled">⚠️ Операция отменена</string>
+    <string name="service_default_text">Идет операция. Не отключайте кабель.</string>
+    <string name="service_channel_name">Операции ADB/Fastboot</string>
+    <string name="service_channel_description">Уведомление во время прошивки или ADB Sideload</string>
+    <string name="dialog_permissions_title">Разрешения</string>
+    <string name="permissions_dialog_message">Текущий статус:
+
+Доступ ко всем файлам: %1$s
+Уведомления: %2$s
+Исключение из оптимизации батареи: %3$s
+Защита от окон поверх приложения: %4$s
+
+Используемые разрешения:
+• Доступ ко всем файлам — читает выбранные пользователем образы, ZIP/APK и диагностические файлы из /sdcard/Download/NekoFlash.
+• Уведомления — показывает foreground-уведомление во время операции.
+• WakeLock — держит CPU активным только во время прошивки или sideload и освобождается после операции.
+• Hide overlay windows — на Android 12+ блокирует чужие окна поверх приложения во время чувствительных действий.
+• Интернет/состояние сети — используется только в Mi Account / Mi Unlock для связи с официальными HTTPS-серверами Xiaomi.
+
+Не запрашивается:
+• Поверх всех окон / SYSTEM_ALERT_WINDOW.
+• Контакты, SMS, микрофон, камера, телефон или геолокация.</string>
+    <string name="permission_status_granted">выдано</string>
+    <string name="permission_status_not_granted">не выдано</string>
+    <string name="permission_status_optional">необязательно / рекомендуется для долгих операций</string>
+    <string name="permission_status_not_required">не требуется на этой версии Android</string>
+    <string name="permission_status_enabled">включена</string>
+    <string name="permission_status_not_supported">не поддерживается на этой версии Android</string>
+    <string name="open_app_settings_upper">НАСТРОЙКИ ПРИЛОЖЕНИЯ</string>
+    <string name="app_settings_open_error">ОШИБКА: не удалось открыть настройки приложения: %1$s</string>
+    <string name="overlay_protection_enabled">✅ Защита от overlay включена: другие приложения не могут перекрыть окно утилиты.</string>
+    <string name="overlay_protection_error">⚠️ Не удалось включить защиту от overlay: %1$s</string>
+    <string name="overlay_protection_unsupported">Защита от overlay недоступна до Android 12.</string>
+    <string name="wake_lock_acquired">✅ WakeLock активен на время операции.</string>
+    <string name="wake_lock_released">✅ WakeLock освобождён.</string>
+    <string name="wake_lock_error">⚠️ Не удалось включить WakeLock: %1$s</string>
+    <string name="wake_lock_release_error">⚠️ Ошибка освобождения WakeLock: %1$s</string>
+    <string name="log_init_v20">Интерфейс alpha10: ADB/Fastboot-терминал готов. SYSTEM_ALERT_WINDOW не запрашивается.</string>
+
+    <!-- UX v3 full-window redesign -->
+    <string name="flash_queue_empty_log">ОШИБКА: очередь прошивки пуста</string>
+    <string name="flash_queue_updated_log">Очередь обновлена: %1$s → %2$s</string>
+    <string name="flash_queue_cleared_log">Очередь прошивки очищена</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_subtitle">Прошивальщик Android через USB Host</string>
+    <string name="onboarding_bg_desc">Фоновое изображение запуска</string>
+    <string name="onboarding_grant_button">Настроить доступ</string>
+    <string name="perm_storage">Доступ к файлам</string>
+    <string name="perm_notifications">Уведомления</string>
+    <string name="perm_battery_opt">Игнор оптимизации батареи</string>
+    <string name="onboarding_ready_short">Готово к входу</string>
+    <string name="onboarding_need_storage_short">Нужен доступ к файлам</string>
+    <string name="onboarding_agree_text_short">Подтверждаю риски прошивки</string>
+    <string name="onboarding_enter_button">Продолжить</string>
+    <string name="onboarding_confirm_risk_short">Подтвердите риски прошивки</string>
+    <string name="onboarding_confirm_risk_first">Сначала отметьте согласие с рисками прошивки.</string>
+    <string name="onboarding_miui_battery_fallback_toast">Если MIUI не открыла батарею: Настройки → Приложения → NekoFlash → Батарея → Без ограничений.</string>
+    <string name="onboarding_gate_save_failed">Не удалось сохранить подтверждение онбординга. Повторите вход.</string>
+    <string name="onboarding_notifications_open_settings">Уведомления были отклонены несколько раз. Откройте настройки NekoFlash и разрешите их вручную; вход в приложение не заблокирован.</string>
+    <!-- Layout text extracted from activity_main.xml -->
+    <string name="layout_status_no_device">● Нет устройства</string>
+    <string name="layout_icon_scan">🔌</string>
+    <string name="layout_icon_cancel">✕</string>
+    <string name="layout_icon_home">⌂
+Главная</string>
+    <string name="layout_icon_fastboot">⚡
+Прошить</string>
+    <string name="layout_icon_adb">↯
+Sideload</string>
+    <string name="layout_device_title">ИНФОРМАЦИЯ ОБ УСТРОЙСТВЕ</string>
+    <string name="layout_mode_empty">Режим: —</string>
+    <string name="layout_model_empty">Модель: —</string>
+    <string name="layout_slot_empty">Слот: —</string>
+    <string name="layout_bl_empty">BL: —</string>
+    <string name="layout_max_dl_empty">Max DL: —</string>
+    <string name="layout_refresh">↻ Обновить</string>
+    <string name="layout_reboot_system">Система</string>
+    <string name="layout_reboot_bootloader">Загрузчик</string>
+    <string name="layout_reboot_recovery">Recovery</string>
+
+    <!-- Recovery-first Quick Flash (Slice C) -->
+    <string name="quick_flash_recovery_first_title">БЫСТРАЯ ПРОШИВКА • RECOVERY</string>
+    <string name="quick_flash_recovery_first_desc">Выберите один образ и один подтверждённый раздел. Пакетной прошивки ROM и автоматического повтора нет.</string>
+    <string name="quick_flash_primary_recovery">Прошить Recovery</string>
+    <string name="quick_flash_other_targets">ДРУГИЕ ОСНОВНЫЕ ЦЕЛИ</string>
+    <string name="quick_flash_manual_target">Ручное имя раздела</string>
+    <string name="layout_partition_vbmeta">vbmeta</string>
+    <string name="quick_flash_manual_title">Ручная цель быстрой прошивки</string>
+    <string name="quick_flash_manual_hint">Имя раздела</string>
+    <string name="layout_partition_boot">boot</string>
+    <string name="layout_partition_init_boot">init_boot</string>
+    <string name="layout_partition_vendor_boot">vendor_boot</string>
+    <string name="layout_partition_dtbo">dtbo</string>
+    <string name="layout_adb_sideload_title">ADB SIDELOAD</string>
+    <string name="layout_sideload_recovery_hint">Recovery → Apply update → Apply from ADB</string>
+    <string name="layout_choose_zip_sideload">Выбрать файл для Sideload</string>
+    <string name="layout_console_title">ТЕРМИНАЛ И ЛОГИ</string>
+    <string name="console_logs_button">Логи</string>
+    <string name="layout_icon_up">▲</string>
+    <string name="layout_icon_down">▼</string>
+    <string name="layout_command_hint">adb shell / adb shell getprop / fastboot getvar all</string>
+    <string name="continue_upper">ПРОДОЛЖИТЬ</string>
+
+    <!-- 2.5.1 Classic Recovery UI -->
+
+    <!-- 2.5.2 Operation Center UI -->
+    <string name="layout_operation_center_title">ОПЕРАЦИОННЫЙ ЦЕНТР</string>
+    <string name="layout_operation_center_idle">ГОТОВО · Активной операции нет</string>
+    <string name="layout_operation_center_running">ВЫПОЛНЯЕТСЯ · Не отключайте USB/OTG</string>
+    <string name="layout_operation_center_cancelling">ОТМЕНА · Безопасно завершаем USB-операцию</string>
+    <string name="layout_operation_center_cancelling_task">Безопасное завершение операции</string>
+    <string name="layout_operation_center_cancelling_detail">Ждём остановки активной USB-передачи и корректного закрытия сессии. Не отключайте кабель.</string>
+    <string name="layout_operation_cancelling_action">Отмена…</string>
+    <string name="layout_operation_center_completed">ЗАВЕРШЕНО · Операция выполнена успешно</string>
+    <string name="layout_operation_center_failed">ОШИБКА · Проверьте детали перед повтором</string>
+    <string name="layout_operation_center_last_event_empty">Последнее событие: —</string>
+    <string name="layout_operation_center_last_event">Техническая деталь: %1$s</string>
+    <string name="layout_operation_console">Открыть консоль</string>
+    <string name="layout_operation_cancel">Отменить операцию</string>
+    <plurals name="layout_operation_steps_more">
+        <item quantity="one">… и ещё %1$d шаг</item>
+        <item quantity="few">… и ещё %1$d шага</item>
+        <item quantity="many">… и ещё %1$d шагов</item>
+        <item quantity="other">… и ещё %1$d шага</item>
+    </plurals>
+
+
+    <string name="layout_reboot_menu">⟳ Перезагрузка</string>
+    <string name="layout_reboot_fastbootd">Fastbootd</string>
+    <string name="layout_reports_menu">Отчёты</string>
+    <string name="reports_sheet_title">📋 Отчёты и логи</string>
+    <string name="reports_open_folder">📂  Открыть папку отчётов</string>
+    <string name="reports_log_actions">📄  Логи и сессии</string>
+    <string name="settings_open_language">🌐  Язык</string>
+    <string name="settings_open_permissions">🔐  Разрешения</string>
+    <string name="settings_open_battery">🔋  Оптимизация батареи</string>
+    <string name="terminal_batch_syntax_hint">💡 Это синтаксис ПК-батника/shell-скрипта («%1$s»), а не команда fastboot/adb — у устройства нет такой wire-команды. Откройте .bat/.sh файл и выполняйте fastboot/adb-команды из него по одной, без служебных строк echo/if/for/set/pause/label.</string>
+    <string name="layout_sideload_import">Импорт файла</string>
+    <string name="settings_section_system">СИСТЕМА</string>
+    <string name="settings_section_service">СЕРВИС</string>
+    <string name="settings_clear_workspace">🗑 Очистить рабочую папку</string>
+    <string name="settings_clear_workspace_sub">Удалить импортированные файлы из рабочей папки</string>
+    <string name="settings_clear_workspace_confirm">Удалить все файлы в:
+%1$s
+
+Это действие необратимо.</string>
+    <string name="settings_clear_workspace_do">Удалить</string>
+    <plurals name="settings_clear_workspace_done">
+        <item quantity="one">🗑 Рабочая папка очищена: удалён %1$d файл</item>
+        <item quantity="few">🗑 Рабочая папка очищена: удалено %1$d файла</item>
+        <item quantity="many">🗑 Рабочая папка очищена: удалено %1$d файлов</item>
+        <item quantity="other">🗑 Рабочая папка очищена: удалено %1$d файла</item>
+    </plurals>
+    <string name="settings_about">ℹ️ О NekoFlash</string>
+    <string name="settings_about_sub">Версия %1$s</string>
+    <string name="settings_about_body">NekoFlash v%1$s
+
+Инструмент прошивки Android через USB-host (ADB/Fastboot).
+Прошивка без ПК — телефон прошивает телефон.
+
+Используйте на свой риск. Прошивка может превратить устройство в кирпич.
+
+Android robot attribution: The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the Creative Commons 3.0 Attribution License. Android is a trademark of Google LLC.</string>
+    <string name="layout_icon_settings_tab">⚙
+Настр.</string>
+    <string name="layout_flash_reboot_mode">Перезагрузка</string>
+    <string name="flash_progress_writing">Запись…</string>
+    <string name="status_fastbootd">● FASTBOOT • FASTBOOTD</string>
+    <string name="otg_status_checking">🔌 OTG: проверка…</string>
+    <string name="otg_status_unsupported">🔌 OTG: не поддерживается этим телефоном</string>
+    <string name="otg_status_active">🔌 OTG: активен · устройство найдено</string>
+    <string name="otg_status_no_device">🔌 OTG: нет устройств · проверьте кабель или включите OTG в настройках</string>
+    <string name="perm_open_settings_manually">Не удалось открыть настройки автоматически. Выдайте NekoFlash доступ «Ко всем файлам» вручную: Настройки → Приложения.</string>
+    <string name="layout_icon_unlock_tab">🔓
+Разблок.</string>
+    <string name="mi_login_continue">Продолжить</string>
+    <string name="mi_login_logout">Выйти</string>
+    <string name="mi_login_already">Уже выполнен вход, ID: %1$s</string>
+    <string name="mi_login_success">Вход выполнен, ID: %1$s</string>
+    <string name="usb_generic_fastboot_title">Неподтверждённый USB-интерфейс</string>
+    <string name="usb_generic_fastboot_message">У интерфейса есть vendor-specific bulk IN/OUT, но его дескрипторы не подтверждают Android Fastboot. Продолжайте только если на целевом устройстве явно открыт режим Fastboot.
+
+%s</string>
+    <string name="terminal_send">Отправить команду</string>
+    <string name="mi_login_blocked_host">Вход остановлен: переход на недоверенный адрес (%1$s) заблокирован.</string>
+    <string name="mi_login_network_error">Не удалось загрузить страницу Mi Аккаунта.</string>
+    <string name="mi_login_ssl_error">Вход остановлен: не удалось проверить TLS-сертификат Mi Аккаунта.</string>
+    <string name="mi_login_webview_error">Компонент безопасного входа неожиданно остановился. Повторите попытку.</string>
+    <string name="mi_login_retry">Повторить вход</string>
+    <string name="mi_login_missing_cookies">Xiaomi завершила вход, но не вернула обязательные cookies сессии unlockApi. Повторите вход или сначала выйдите из Mi Аккаунта в браузере.</string>
+    <string name="mi_login_cancelled_by_user">Вход отменён пользователем.</string>
+    <string name="logs_sheet_title">ЛОГИ И СЕССИИ</string>
+    <string name="logs_current_summary">Текущая сессия</string>
+    <string name="logs_current_compact">Компактный лог</string>
+    <string name="logs_current_trace">Трассировка протокола</string>
+    <string name="logs_current_json">Сводка сессии (JSON)</string>
+    <string name="logs_history">Все файлы журналов</string>
+    <string name="logs_open_folder">Открыть папку журналов</string>
+    <string name="logs_clear_console">Очистить консоль</string>
+    <string name="logs_delete_old">Удалить старые журналы</string>
+    <string name="logs_no_files">Файлы журналов ещё не созданы.</string>
+    <string name="logs_preview">Просмотр</string>
+    <string name="logs_share_sanitized">Отправить очищенную копию</string>
+    <string name="logs_copy_path">Копировать путь</string>
+    <string name="logs_delete_file">Удалить файл</string>
+    <string name="logs_active_protected">Файл активной сессии защищён от удаления.</string>
+    <string name="logs_delete_old_title">Удалить старые журналы?</string>
+    <string name="logs_delete_old_message">Будут удалены только завершённые журналы, трассировки и сводки сессий. Активная сессия останется.</string>
+    <string name="logs_deleted_count">Удалено старых файлов: %1$d</string>
+    <string name="logs_folder_opened">Открываю папку журналов: %1$s</string>
+    <string name="logs_path_copied">Путь к журналу скопирован</string>
+    <string name="logs_preview_tail_note">Показан хвост файла; полный файл доступен через экспорт.</string>
+    <string name="logs_history_count">%1$s (%2$d)</string>
+    <string name="logs_entry_summary">%1$s\n%2$s\n%3$s</string>
+    <string name="logs_preview_content">%1$s\n\n%2$s</string>
+    <string name="mi_unlock_sign_in_button">🔑 Войти в Mi-аккаунт</string>
+    <string name="mi_unlock_change_zone_button">🌍 Сменить dataCenterZone</string>
+    <string name="device_mode_value">Режим: %1$s</string>
+    <string name="device_product_value">Модель / product: %1$s%2$s%3$s</string>
+    <string name="device_slot_value">Слот: %1$s</string>
+    <string name="device_bootloader_value">Загрузчик разблокирован: %1$s</string>
+    <string name="device_max_download_value">Макс. загрузка: %1$s%2$s%3$s%4$s</string>
+    <string name="console_resize_handle_desc">Потяните вверх, чтобы открыть терминал и логи, или вниз, чтобы свернуть.</string>
+
+    <string name="device_transport_placeholder">USB: —\nСессия: —</string>
+    <string name="device_transport_value">USB: %1$s\nСессия: %2$s</string>
+    <string name="console_peek_hint">Потяните вверх: терминал и логи</string>
+    <string name="device_bool_yes">да</string>
+    <string name="device_bool_no">нет</string>
+    <string name="device_bool_unknown">неизвестно</string>
+    <!-- UI/UX audit: persistent Operation Center and non-blocking Console -->
+    <string name="layout_operation_center_subtitle">Прогресс, текущий шаг и итог всегда здесь. Консоль открывается только по вашему действию.</string>
+    <string name="layout_operation_center_cancelled">ОТМЕНЕНО · Операция безопасно остановлена</string>
+    <string name="layout_operation_center_verify_pending">НУЖНА ПРОВЕРКА · Требуется подтверждение результата</string>
+    <string name="layout_operation_center_current_label">СЕЙЧАС</string>
+    <string name="layout_operation_center_result_label">ИТОГ</string>
+    <string name="layout_operation_center_working">Операция выполняется</string>
+    <string name="layout_operation_step_summary">Шаг %1$d из %2$d</string>
+    <string name="layout_operation_strip_step_status">%1$s · %2$s</string>
+    <string name="layout_operation_progress_percent">%1$d%%</string>
+    <string name="layout_operation_open_center_desc">Открыть Операционный центр</string>
+    <string name="layout_operation_dismiss_status_desc">Скрыть статус операции</string>
+    <string name="layout_icon_close">×</string>
+    <string name="console_expand_action_desc">Открыть терминал и логи</string>
+    <string name="console_collapse_action_desc">Свернуть терминал и логи</string>
+    <string name="import_file_action_desc">Импортировать файл</string>
+
+    <!-- Quick Flash slot selection -->
+    <string name="quick_flash_slot_dialog_title">Куда прошить %1$s</string>
+    <string name="quick_flash_slot_dialog_message">Для этого раздела устройство сообщает has-slot=yes. Выберите целевой слот перед выбором образа.</string>
+    <string name="quick_flash_active_slot_target">Активный слот %1$s → %2$s</string>
+    <string name="quick_flash_current_slot">текущий</string>
+    <string name="quick_flash_all_slots_range" tools:ignore="TypographyDashes">Все слоты a–%1$s (--slot=all)</string>
+    <string name="quick_flash_all_slots" tools:ignore="TypographyDashes">Все слоты (--slot=all)</string>
+
+    <!-- Mi Unlock page -->
+    <string name="mi_unlock_page_title">🔓 РАЗБЛОКИРОВКА ЗАГРУЗЧИКА</string>
+    <string name="mi_unlock_page_subtitle">Авторизация Xiaomi и разблокировка загрузчика</string>
+    <string name="mi_unlock_data_warning">⚠ Разблокировка удалит пользовательские данные. Сохраните важные файлы перед продолжением.</string>
+    <string name="mi_unlock_account_section">MI-АККАУНТ</string>
+    <string name="mi_unlock_sign_in_hint">Войдите в аккаунт для авторизации Xiaomi.</string>
+    <string name="mi_unlock_authorized">✅ Авторизовано · ID %1$s</string>
+    <string name="mi_unlock_region_zone">Регион: %1$s · dataCenterZone: %2$s (%3$s)</string>
+    <string name="mi_unlock_zone_title">Центр обработки данных Xiaomi</string>
+    <string name="mi_unlock_sign_out_switch">Выйти из Mi-аккаунта?</string>
+    <string name="mi_unlock_sign_out_title">Выход из аккаунта</string>
+    <string name="mi_unlock_sign_out_message">Сохранённая авторизация Xiaomi для ID %1$s (регион %2$s) будет удалена из NekoFlash.</string>
+    <string name="mi_unlock_sign_out">ВЫЙТИ</string>
+    <string name="mi_unlock_bootloader_section">ЗАГРУЗЧИК</string>
+    <string name="mi_unlock_bootloader_unlocked">✅ Загрузчик уже разблокирован</string>
+    <string name="mi_unlock_repeat_not_needed">Повторная разблокировка не требуется.</string>
+    <string name="mi_unlock_fastboot_requirement">Перед разблокировкой подключите целевое устройство в режиме Fastboot.</string>
+    <string name="mi_unlock_data_warning_short">Разблокировка удалит пользовательские данные на целевом устройстве.</string>
+    <string name="mi_unlock_operation_running">Операция разблокировки уже выполняется.</string>
+    <string name="mi_unlock_connect_fastboot">Сначала подключите устройство в режиме Fastboot.</string>
+    <string name="mi_unlock_action">РАЗБЛОКИРОВАТЬ ЗАГРУЗЧИК</string>
+    <string name="mi_unlock_session_expired">Сессия Mi-аккаунта истекла. Войдите снова.</string>
+    <string name="mi_unlock_status_summary">product: %1$s • слот: %2$s • разблокирован: %3$s • secure: %4$s</string>
+
+    <!-- Logs and reports -->
+    <string name="reports_copy_short_summary">Копировать краткую сводку</string>
+    <string name="reports_short_summary_copied">Краткая сводка скопирована</string>
+    <string name="logs_overview_build">Сборка: %1$s</string>
+    <string name="logs_overview_operations">Операции: %1$d/%2$d  •  ⚠ %3$d  •  ✕ %4$d</string>
+    <string name="logs_overview_files">Файлы: %1$d  •  старых: %2$d</string>
+    <string name="logs_summary_build">Сборка: %1$s</string>
+    <string name="logs_summary_session">Сессия: %1$s</string>
+    <string name="logs_summary_transport_session">Транспортная сессия: %1$s</string>
+    <string name="logs_summary_messages">Сообщения: info=%1$d, успешно=%2$d, предупреждения=%3$d, ошибки=%4$d</string>
+    <string name="logs_summary_operations">Операции: начато=%1$d, успешно=%2$d, ошибки=%3$d, отменено=%4$d, ждут проверки=%5$d</string>
+    <string name="logs_summary_last_operation">Последняя операция: %1$s</string>
+    <string name="logs_summary_last_outcome">Последний результат: %1$s</string>
+    <string name="logs_summary_connection">Подключение: %1$s</string>
+    <string name="logs_summary_last_warning">Последнее предупреждение: %1$s</string>
+    <string name="logs_summary_last_error">Последняя ошибка: %1$s</string>
+    <string name="logs_none">нет</string>
+    <string name="logs_clipboard_session_label">Сводка сессии NekoFlash</string>
+    <string name="logs_session_summary_copied">Сводка сессии скопирована</string>
+    <string name="logs_read_error">Ошибка чтения: %1$s</string>
+    <string name="logs_kind_compact">КОМПАКТНЫЙ</string>
+    <string name="logs_kind_trace">ТРАССИРОВКА</string>
+    <string name="logs_kind_summary">СВОДКА</string>
+
+    <!-- Device overview / partition inventory -->
+    <string name="device_topology_legacy">без A/B (только A)</string>
+    <string name="device_slot_current_unknown">A/B, текущий слот неизвестен</string>
+    <string name="device_extra_serial"> | Серийный №: %1$s</string>
+    <string name="device_extra_slot_count"> | Слотов: %1$s</string>
+    <string name="device_extra_slot_suffix"> | Суффикс: %1$s</string>
+    <string name="device_extra_bootloader_version"> | BL: %1$s</string>
+    <string name="device_extra_fetch"> | fetch: %1$s</string>
+    <string name="device_extra_super"> | super: %1$s</string>
+    <string name="device_inventory_summary"> | Разделы: %1$d (обычные %2$d / расширенные %3$d / критичные %4$d; физические %5$d / логические %6$d; неполные %7$d)</string>
+
+    <string name="diagnostic_summary_clipboard_label">Диагностическая сводка NekoFlash</string>
+    <string name="reports_folder_opening">Открываю папку отчётов: %1$s</string>
+    <string name="reports_clipboard_label">Отчёты NekoFlash</string>
+    <string name="reports_path_copied">Путь к отчётам скопирован</string>
+    <string name="logs_sanitized_share_created">🔒 Для отправки создана временная очищенная копия журнала.</string>
+    <string name="logs_sanitized_share_subject">Очищенный журнал NekoFlash</string>
+
+    <string name="logs_clipboard_log_label">Журнал NekoFlash</string>
+    <string name="logs_clipboard_folder_label">Журналы NekoFlash</string>
+</resources>

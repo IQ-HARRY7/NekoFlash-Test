@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<title>Как прошить recovery или TWRP с Android | NekoFlash</title>
+<meta name="description" content="Прошивка recovery или TWRP с Android через NekoFlash Quick Flash: выбор правильного образа, раздела, boot/init_boot/vendor_boot и слота.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ff7a1a">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://ncorror.github.io/NekoFlash/ru/guides/flash-recovery-twrp/">
+<link rel="alternate" hreflang="ru" href="https://ncorror.github.io/NekoFlash/ru/guides/flash-recovery-twrp/">
+<link rel="alternate" hreflang="en" href="https://ncorror.github.io/NekoFlash/guides/flash-recovery-twrp/">
+<link rel="alternate" hreflang="x-default" href="https://ncorror.github.io/NekoFlash/guides/flash-recovery-twrp/">
+<link rel="icon" href="../../../assets/favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NekoFlash">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://ncorror.github.io/NekoFlash/ru/guides/flash-recovery-twrp/">
+<meta property="og:title" content="Прошивка recovery или TWRP с Android">
+<meta property="og:description" content="Quick Flash, выбор правильного раздела и проверка слотов перед прошивкой recovery.">
+<meta property="og:image" content="https://ncorror.github.io/NekoFlash/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NekoFlash","item":"https://ncorror.github.io/NekoFlash/ru/"},{"@type":"ListItem","position":2,"name":"Руководства","item":"https://ncorror.github.io/NekoFlash/ru/guides/"},{"@type":"ListItem","position":3,"name":"Прошивка recovery или TWRP с Android","item":"https://ncorror.github.io/NekoFlash/ru/guides/flash-recovery-twrp/"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","headline":"Прошивка recovery или TWRP с Android","description":"Безопасный выбор recovery-образа, раздела и слота при работе через NekoFlash Quick Flash.","inLanguage":"ru","mainEntityOfPage":"https://ncorror.github.io/NekoFlash/ru/guides/flash-recovery-twrp/"}
+</script>
+</head>
+<body>
+<nav class="nav"><div class="wrap nav-inner"><a class="brand" href="../../"><span>Neko</span>Flash</a><div class="nav-links"><a href="../">Руководства</a><a href="https://github.com/Ncorror/NekoFlash">GitHub</a><a class="lang" href="../../../guides/flash-recovery-twrp/" hreflang="en">EN</a></div></div></nav>
+<main><div class="wrap article">
+<div class="breadcrumbs"><a href="../../">NekoFlash</a> / <a href="../">Руководства</a> / Recovery / TWRP</div>
+<h1>Как прошить recovery или TWRP с Android</h1>
+<p class="lead">Quick Flash в NekoFlash помогает выбрать образ и явный целевой раздел, после чего передаёт операцию записи через Fastboot с Android USB-хоста.</p>
+
+<div class="toc"><strong>Главное правило</strong><p>Файл recovery не всегда нужно прошивать в раздел <code>recovery</code>. Современные устройства используют разные схемы загрузки.</p></div>
+
+<h2>1. Получите правильный образ</h2>
+<p>Используйте recovery или TWRP, предназначенный для точной модели устройства и её поколения программного обеспечения. Образ от похожей модели может быть опасен.</p>
+
+<h2>2. Определите правильный раздел</h2>
+<p>NekoFlash предлагает типичные цели Quick Flash: <code>recovery</code>, <code>boot</code>, <code>init_boot</code>, <code>vendor_boot</code>, <code>dtbo</code>, <code>vbmeta</code>, а также ручной ввод имени раздела.</p>
+<p>На части устройств есть отдельный recovery-раздел. На других recovery интегрирован в boot-цепочку. Не выбирайте раздел только по имени файла.</p>
+
+<h2>3. Проверьте слот</h2>
+<p>На A/B-устройствах подтвердите текущий слот и определите, является ли выбранный раздел слотовым.</p>
+
+<h2>4. Прошивайте только после подтверждения</h2>
+<p>После проверки устройства, образа, раздела и слота запустите Quick Flash и не отключайте кабель до завершения операции.</p>
+
+<h2>5. Перезагружайтесь осознанно</h2>
+<p>Используйте способ загрузки, рекомендованный документацией recovery и конкретного устройства. Некоторые устройства требуют сначала один раз загрузить новый recovery, чтобы Android не перезаписал его.</p>
+
+<div class="notice" style="margin:42px 0"><strong>Важно.</strong> Перед записью сверяйтесь с документацией конкретного устройства. Универсального recovery-раздела для всех Android-устройств не существует.</div>
+<div class="actions"><a class="btn primary" href="https://github.com/Ncorror/NekoFlash/releases/latest">Скачать NekoFlash</a><a class="btn" href="https://github.com/Ncorror/NekoFlash">Исходный код</a></div>
+</div></main>
+<footer class="footer"><div class="wrap footer-inner"><div>© 2026 NekoFlash · Apache-2.0.</div><div><a href="https://github.com/Ncorror/NekoFlash">GitHub</a></div></div></footer>
+</body>
+</html>

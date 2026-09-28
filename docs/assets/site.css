@@ -1,0 +1,508 @@
+:root{--bg:#071018;--panel:#0d1721;--panel2:#101e2a;--text:#eef4fa;--muted:#9eafbf;--line:#23384a;--orange:#ff7a1a;--orange2:#ffb45e;--cyan:#55c7e8;--green:#68d391;--shadow:0 18px 60px rgba(0,0,0,.28);--radius:22px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% 0,#102636 0,transparent 34rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6}a{color:inherit}img{max-width:100%;height:auto}.wrap{width:min(1160px,calc(100% - 36px));margin:auto}.skip{position:absolute;left:-9999px;top:auto}.skip:focus{left:16px;top:16px;background:#fff;color:#000;padding:10px;z-index:1000}.nav{position:sticky;top:0;z-index:40;background:rgba(7,16,24,.86);backdrop-filter:blur(16px);border-bottom:1px solid rgba(45,76,99,.62)}.nav-inner{height:70px;display:flex;align-items:center;gap:24px}.brand{font-weight:800;font-size:1.28rem;text-decoration:none;letter-spacing:.02em}.brand span{color:var(--orange)}.nav-links{display:flex;gap:20px;margin-left:auto;align-items:center}.nav-links a{text-decoration:none;color:var(--muted);font-weight:650}.nav-links a:hover{color:var(--text)}.lang{border:1px solid var(--line);padding:7px 11px;border-radius:999px}.hero{padding:82px 0 56px}.hero-grid{display:grid;grid-template-columns:1.08fr .72fr;gap:56px;align-items:center}.eyebrow{color:var(--orange2);font:700 .84rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase}.hero h1{font-size:clamp(2.7rem,7vw,5.6rem);line-height:.94;margin:.14em 0 .28em;letter-spacing:-.055em}.hero h1 .accent{color:var(--orange)}.lead{font-size:clamp(1.08rem,2.2vw,1.35rem);color:#c0cedb;max-width:760px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0 24px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 18px;border-radius:14px;text-decoration:none;font-weight:800;border:1px solid var(--line);background:#11202c}.btn.primary{background:var(--orange);border-color:var(--orange);color:#111}.btn:hover{transform:translateY(-1px)}.meta-row{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.94rem}.pill{border:1px solid var(--line);background:rgba(16,30,42,.7);border-radius:999px;padding:6px 11px}.phone{max-width:350px;margin:auto;position:relative}.phone:before{content:"";position:absolute;inset:-18px;border-radius:36px;background:linear-gradient(145deg,rgba(255,122,26,.3),rgba(85,199,232,.08));filter:blur(22px);z-index:-1}.phone img{display:block;border:1px solid #31495c;border-radius:30px;box-shadow:var(--shadow)}section{padding:64px 0}.section-head{max-width:760px;margin-bottom:28px}.section-head h2{font-size:clamp(2rem,4vw,3.15rem);line-height:1.04;margin:0 0 12px;letter-spacing:-.035em}.section-head p{color:var(--muted);font-size:1.06rem}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,rgba(16,30,42,.95),rgba(11,21,30,.95));padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.12)}.card h3{margin:0 0 8px;font-size:1.18rem}.card p{margin:0;color:var(--muted)}.icon{font-size:1.5rem;margin-bottom:13px}.steps{counter-reset:step}.step{position:relative;padding-left:58px}.step:before{counter-increment:step;content:counter(step);position:absolute;left:0;top:0;width:38px;height:38px;border-radius:12px;background:#172b39;color:var(--orange2);display:grid;place-items:center;font-weight:900;border:1px solid #2a4b61}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.shot{padding:14px}.shot img{display:block;width:100%;border-radius:16px;border:1px solid #293f50;background:#071018}.shot figcaption{font-weight:800;padding:12px 4px 2px}.shot small{display:block;color:var(--muted);font-weight:500;margin-top:3px}.notice{border:1px solid #6a4a1d;background:#2a1c0d;border-radius:18px;padding:20px 22px;color:#ffd39b}.notice strong{color:#fff}.guides{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.guide-link{text-decoration:none}.guide-link .card{height:100%;transition:.15s transform,.15s border-color}.guide-link:hover .card{transform:translateY(-3px);border-color:#47718e}.faq{display:grid;gap:10px}.faq details{border:1px solid var(--line);border-radius:15px;background:#0d1721;padding:4px 18px}.faq summary{cursor:pointer;font-weight:800;padding:15px 0}.faq p{color:var(--muted);margin:0 0 16px}.footer{border-top:1px solid var(--line);padding:36px 0 50px;color:var(--muted)}.footer-inner{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap}.footer a{color:#cad7e3}.breadcrumbs{font-size:.9rem;color:var(--muted);padding-top:34px}.breadcrumbs a{color:#cbd8e4}.article{max-width:850px}.article h1{font-size:clamp(2.4rem,6vw,4rem);line-height:1.02;letter-spacing:-.04em}.article h2{margin-top:46px;font-size:1.75rem}.article h3{margin-top:28px}.article p,.article li{color:#c0cedb}.article code{background:#111f2b;border:1px solid #263d4e;padding:.1em .34em;border-radius:6px}.toc{border:1px solid var(--line);background:#0d1721;padding:18px 22px;border-radius:18px}.toc a{color:#c9d7e3}.kicker{color:var(--orange2);font-weight:800}.release{display:flex;align-items:center;justify-content:space-between;gap:20px}.release strong{font-size:1.4rem}.muted{color:var(--muted)}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}.phone{max-width:300px}.grid3,.gallery,.guides{grid-template-columns:1fr 1fr}.nav-links a:not(.lang){display:none}}
+@media (max-width:620px){.wrap{width:min(100% - 24px,1160px)}.hero{padding-top:54px}.grid3,.gallery,.guides{grid-template-columns:1fr}.actions{display:grid}.btn{width:100%}.release{align-items:flex-start;flex-direction:column}.nav-inner{height:62px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.guide-link .card{transition:none}}
+
+/* ===== NekoFlash site v2 ===== */
+
+/* Accessibility + anchor navigation */
+:focus-visible{
+  outline:3px solid var(--orange2);
+  outline-offset:3px;
+}
+section[id]{
+  scroll-margin-top:96px;
+}
+
+/* Navigation */
+.nav{
+  box-shadow:0 8px 32px rgba(0,0,0,.12);
+}
+.nav-inner{
+  max-width:1160px;
+}
+.nav-links a{
+  position:relative;
+  transition:color .16s ease,background .16s ease,border-color .16s ease;
+}
+.nav-links a:not(.lang):after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-7px;
+  height:2px;
+  border-radius:2px;
+  background:var(--orange);
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform .16s ease;
+}
+.nav-links a:not(.lang):hover:after,
+.nav-links a:not(.lang):focus-visible:after{
+  transform:scaleX(1);
+}
+
+/* Hero */
+.hero{
+  min-height:calc(100svh - 70px);
+  display:flex;
+  align-items:center;
+  padding:76px 0 68px;
+}
+.hero-grid{
+  position:relative;
+}
+.hero-grid:before{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  left:-220px;
+  top:-110px;
+  border-radius:50%;
+  background:rgba(255,122,26,.07);
+  filter:blur(25px);
+  pointer-events:none;
+  z-index:-1;
+}
+.hero .lead{
+  line-height:1.72;
+}
+.hero .actions{
+  margin-top:34px;
+}
+.hero .btn.primary{
+  box-shadow:0 12px 34px rgba(255,122,26,.22);
+}
+.hero .btn.primary:hover{
+  box-shadow:0 15px 40px rgba(255,122,26,.30);
+}
+.btn{
+  transition:
+    transform .16s ease,
+    border-color .16s ease,
+    background .16s ease,
+    box-shadow .16s ease;
+}
+.btn:hover{
+  transform:translateY(-2px);
+  border-color:#3c5c72;
+}
+.btn:active{
+  transform:translateY(0);
+}
+.phone{
+  isolation:isolate;
+}
+.phone:after{
+  content:"";
+  position:absolute;
+  width:58%;
+  height:26px;
+  left:21%;
+  bottom:-14px;
+  border-radius:50%;
+  background:rgba(0,0,0,.48);
+  filter:blur(15px);
+  z-index:-1;
+}
+
+/* Section rhythm */
+section{
+  position:relative;
+}
+.section-head h2{
+  text-wrap:balance;
+}
+.section-head p,
+.lead{
+  text-wrap:pretty;
+}
+
+/* Feature / guide cards */
+.card{
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+.grid3 .card:hover,
+.guides .card:hover{
+  transform:translateY(-4px);
+  border-color:#395c73;
+  box-shadow:0 18px 44px rgba(0,0,0,.18);
+}
+
+/* Screenshots */
+.shot{
+  overflow:hidden;
+}
+.shot img{
+  transition:transform .28s ease,border-color .2s ease;
+}
+.shot:hover img{
+  transform:scale(1.012);
+  border-color:#42657e;
+}
+.shot figcaption{
+  line-height:1.35;
+}
+
+/* Warning */
+.notice{
+  position:relative;
+  overflow:hidden;
+  box-shadow:inset 4px 0 0 var(--orange);
+}
+
+/* FAQ */
+.faq details{
+  transition:border-color .16s ease,background .16s ease;
+}
+.faq details:hover,
+.faq details[open]{
+  border-color:#36586f;
+  background:#101d28;
+}
+.faq summary{
+  list-style-position:outside;
+}
+
+/* Current release */
+.release{
+  position:relative;
+  overflow:hidden;
+  padding:30px;
+  border-color:#365169;
+  background:
+    radial-gradient(circle at 100% 0,rgba(255,122,26,.12),transparent 280px),
+    linear-gradient(180deg,rgba(16,30,42,.98),rgba(10,20,29,.98));
+}
+.release:before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:4px;
+  background:linear-gradient(var(--orange),var(--orange2));
+}
+.release strong{
+  display:block;
+  margin-top:3px;
+  font-size:clamp(1.5rem,3vw,2rem);
+}
+.release .actions{
+  margin:0;
+}
+
+/* Footer */
+.footer{
+  background:rgba(4,11,17,.32);
+}
+
+/* Better tablet/mobile navigation.
+   Existing CSS hides all links except the language button;
+   this restores them as a compact horizontal navigation row. */
+@media (max-width:900px){
+  .nav{
+    position:sticky;
+  }
+
+  .nav-inner{
+    height:auto;
+    min-height:66px;
+    flex-wrap:wrap;
+    gap:0;
+    padding:10px 0 9px;
+  }
+
+  .brand{
+    min-height:42px;
+    display:flex;
+    align-items:center;
+  }
+
+  .nav-links{
+    order:2;
+    width:100%;
+    margin:4px 0 0;
+    padding:3px 0 2px;
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .nav-links::-webkit-scrollbar{
+    display:none;
+  }
+
+  .nav-links a,
+  .nav-links a:not(.lang){
+    display:inline-flex;
+    flex:0 0 auto;
+    align-items:center;
+    min-height:38px;
+    padding:7px 11px;
+    border:1px solid transparent;
+    border-radius:11px;
+    font-size:.9rem;
+    white-space:nowrap;
+  }
+
+  .nav-links a:not(.lang):after{
+    display:none;
+  }
+
+  .nav-links a:hover{
+    background:#101e2a;
+    border-color:var(--line);
+  }
+
+  .lang{
+    border-color:var(--line)!important;
+  }
+
+  .hero{
+    min-height:auto;
+    padding:58px 0 44px;
+  }
+
+  .hero-grid{
+    gap:44px;
+  }
+
+  .phone{
+    max-width:280px;
+  }
+
+  section[id]{
+    scroll-margin-top:120px;
+  }
+}
+
+@media (max-width:620px){
+  .wrap{
+    width:min(100% - 28px,1160px);
+  }
+
+  .nav-inner{
+    height:auto;
+    min-height:62px;
+  }
+
+  .hero{
+    padding-top:44px;
+  }
+
+  .hero h1{
+    font-size:clamp(2.75rem,15vw,4.15rem);
+  }
+
+  .hero .lead{
+    font-size:1.05rem;
+  }
+
+  .hero .actions{
+    gap:10px;
+  }
+
+  .hero .btn.primary{
+    min-height:52px;
+  }
+
+  section{
+    padding:52px 0;
+  }
+
+  .card{
+    padding:21px;
+    border-radius:18px;
+  }
+
+  .gallery{
+    gap:14px;
+  }
+
+  .shot{
+    padding:10px;
+  }
+
+  .release{
+    padding:24px 21px 22px;
+  }
+
+  .release .actions{
+    width:100%;
+  }
+
+  .release .btn{
+    width:100%;
+  }
+
+  .footer{
+    padding-bottom:34px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .nav-links a,
+  .nav-links a:after,
+  .card,
+  .shot img{
+    transition:none!important;
+  }
+}
+
+/* ===== Mobile screenshot carousel ===== */
+@media (max-width:620px){
+  .gallery{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    overscroll-behavior-inline:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding:4px 14px 14px 0;
+  }
+
+  .gallery::-webkit-scrollbar{
+    display:none;
+  }
+
+  .gallery .shot{
+    flex:0 0 min(82vw,340px);
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+    margin:0;
+  }
+
+  .gallery .shot img{
+    width:100%;
+    height:auto;
+  }
+}
+
+/* ===== Mobile nav compact ===== */
+@media (max-width:620px){
+  .nav-inner{
+    padding-top:8px;
+    padding-bottom:8px;
+    gap:6px;
+  }
+
+  .brand{
+    line-height:1.1;
+  }
+
+  .nav-links{
+    width:100%;
+    gap:4px;
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding-bottom:1px;
+  }
+
+  .nav-links::-webkit-scrollbar{
+    display:none;
+  }
+
+  .nav-links a{
+    flex:0 0 auto;
+    padding:6px 8px;
+    line-height:1.15;
+  }
+
+  section[id]{
+    scroll-margin-top:112px;
+  }
+}
+
+/* ===== Mobile final polish v3 ===== */
+@media (max-width:620px){
+
+  /* On phones the browser already consumes vertical space.
+     Keep the full navigation at the top, but do not pin it
+     over the page while the user scrolls. */
+  .nav{
+    position:relative;
+    top:auto;
+  }
+
+  .nav-inner{
+    height:auto !important;
+    min-height:0;
+    padding-top:13px;
+    padding-bottom:9px;
+    gap:10px;
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .brand{
+    font-size:1.18rem;
+    line-height:1.1;
+  }
+
+  /* GitHub is already available from the hero and footer.
+     Removing it here leaves room for the language switcher. */
+  .nav-links > a[href^="https://github.com/"]{
+    display:none !important;
+  }
+
+  .nav-links{
+    width:100%;
+    margin-left:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:0;
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding:0;
+    scrollbar-width:none;
+  }
+
+  .nav-links::-webkit-scrollbar{
+    display:none;
+  }
+
+  .nav-links a,
+  .nav-links a:not(.lang){
+    display:block;
+    flex:0 0 auto;
+    padding:6px 3px;
+    font-size:clamp(.74rem,3.25vw,.82rem);
+    line-height:1.15;
+    white-space:nowrap;
+  }
+
+  .nav-links .lang{
+    margin-left:2px;
+  }
+
+  /* The mobile .card rule overwrites the original left
+     padding of numbered steps. Restore a proper number lane. */
+  .steps .step{
+    padding:22px 20px 22px 72px;
+  }
+
+  .steps .step:before{
+    left:20px;
+    top:20px;
+    width:38px;
+    height:38px;
+  }
+
+  /* Sticky offset is no longer needed on phones. */
+  section[id]{
+    scroll-margin-top:16px;
+  }
+}

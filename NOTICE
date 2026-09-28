@@ -1,0 +1,21 @@
+NekoFlash
+Copyright 2026 Ncorror
+
+NekoFlash source code and documentation are licensed under the Apache License,
+Version 2.0, unless a file or accompanying notice states otherwise. See LICENSE.
+
+The launcher artwork and welcome-screen artwork are excluded from the
+Apache-2.0 grant. Their exact scope is documented in ASSETS_LICENSE.md.
+
+Android robot attribution
+-------------------------
+The Android robot is reproduced or modified from work created and shared by
+Google and used according to terms described in the Creative Commons 3.0
+Attribution License.
+
+Android is a trademark of Google LLC.
+
+Third-party software notices and non-bundled reference acknowledgements are
+documented in THIRD_PARTY_NOTICES.md.
+
+This NOTICE file is informational and does not modify the Apache License 2.0.

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<title>Fastboot с Android без компьютера | NekoFlash</title>
+<meta name="description" content="Как использовать NekoFlash для Fastboot с другого Android-телефона через USB OTG без компьютера: подключение, диагностика, разделы и безопасная прошивка.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ff7a1a">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://ncorror.github.io/NekoFlash/ru/guides/fastboot-from-android/">
+<link rel="alternate" hreflang="ru" href="https://ncorror.github.io/NekoFlash/ru/guides/fastboot-from-android/">
+<link rel="alternate" hreflang="en" href="https://ncorror.github.io/NekoFlash/guides/fastboot-from-android/">
+<link rel="alternate" hreflang="x-default" href="https://ncorror.github.io/NekoFlash/guides/fastboot-from-android/">
+<link rel="icon" href="../../../assets/favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NekoFlash">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://ncorror.github.io/NekoFlash/ru/guides/fastboot-from-android/">
+<meta property="og:title" content="Fastboot с Android без компьютера">
+<meta property="og:description" content="Подключение Fastboot-устройства к Android-хосту через USB OTG и безопасная работа без ПК.">
+<meta property="og:image" content="https://ncorror.github.io/NekoFlash/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NekoFlash","item":"https://ncorror.github.io/NekoFlash/ru/"},{"@type":"ListItem","position":2,"name":"Руководства","item":"https://ncorror.github.io/NekoFlash/ru/guides/"},{"@type":"ListItem","position":3,"name":"Fastboot с Android без компьютера","item":"https://ncorror.github.io/NekoFlash/ru/guides/fastboot-from-android/"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","headline":"Fastboot с Android без компьютера","description":"Использование NekoFlash для работы с Fastboot через USB OTG с другого Android-устройства.","inLanguage":"ru","mainEntityOfPage":"https://ncorror.github.io/NekoFlash/ru/guides/fastboot-from-android/"}
+</script>
+</head>
+<body>
+<nav class="nav"><div class="wrap nav-inner"><a class="brand" href="../../"><span>Neko</span>Flash</a><div class="nav-links"><a href="../">Руководства</a><a href="https://github.com/Ncorror/NekoFlash">GitHub</a><a class="lang" href="../../../guides/fastboot-from-android/" hreflang="en">EN</a></div></div></nav>
+<main><div class="wrap article">
+<div class="breadcrumbs"><a href="../../">NekoFlash</a> / <a href="../">Руководства</a> / Fastboot с Android без компьютера</div>
+<h1>Fastboot с Android без компьютера</h1>
+<p class="lead">NekoFlash позволяет Android-телефону или планшету выступать USB-хостом для второго Android-устройства в режиме Fastboot. Компьютер из цепочки исключается, но обычные требования безопасности Fastboot сохраняются.</p>
+
+<div class="toc"><strong>В этом руководстве</strong><ul><li><a href="#requirements">Что потребуется</a></li><li><a href="#connect">Подключение и проверка</a></li><li><a href="#diagnostics">Диагностика</a></li><li><a href="#writes">Перед операциями записи</a></li></ul></div>
+
+<h2 id="requirements">Что потребуется</h2>
+<ul>
+<li>Android 8.0 / API 26 или новее на устройстве с NekoFlash.</li>
+<li>Поддержка USB Host / OTG.</li>
+<li>USB OTG или USB-C кабель с поддержкой передачи данных.</li>
+<li>Целевое устройство, уже загруженное в Fastboot / bootloader.</li>
+<li>Образы или прошивка, предназначенные именно для этой модели и схемы разделов.</li>
+</ul>
+
+<h2 id="connect">1. Подключите и проверьте устройство</h2>
+<p>Соедините целевое устройство с Android-хостом и дождитесь подключения USB-сессии. При USB-C ↔ USB-C система иногда выбирает неправильную роль питания или передачи данных. Телефон с NekoFlash должен стать USB-хостом.</p>
+<p>Не запускайте flash, erase, format или смену активного слота, если обнаруженное устройство не подтверждено как нужное.</p>
+
+<h2 id="diagnostics">2. Начните с безопасной диагностики</h2>
+<p>До изменения разделов используйте диагностические команды Fastboot. NekoFlash может читать переменные bootloader через <code>getvar</code> и получать информацию о разделах и слотах.</p>
+<p>Это особенно важно на A/B-устройствах и устройствах с dynamic partitions, где разделы могут иметь суффиксы <code>_a</code> и <code>_b</code> или управляться логической разметкой.</p>
+
+<h2 id="writes">3. Операции записи зависят от конкретного устройства</h2>
+<p>NekoFlash поддерживает команды Fastboot, включая <code>flash</code>, <code>boot</code>, <code>erase</code>, <code>format</code>, <code>set_active</code> и поддерживаемые OEM-команды. Наличие команды в протоколе не означает, что она безопасна для любого устройства.</p>
+<p>Перед записью подтвердите модель, текущий слот, имя раздела и происхождение образа.</p>
+
+<h2>Когда нужно остановиться</h2>
+<p>Остановитесь, если есть сомнения в модели, разделе, слоте, режиме устройства или совместимости образа. При нестабильном USB-соединении сначала переподключите устройство.</p>
+
+<div class="notice" style="margin:42px 0"><strong>Безопасность прежде всего.</strong> Успешное USB-подключение не доказывает совместимость образа или правильность выбранного раздела.</div>
+<div class="actions"><a class="btn primary" href="https://github.com/Ncorror/NekoFlash/releases/latest">Скачать NekoFlash</a><a class="btn" href="https://github.com/Ncorror/NekoFlash">Исходный код</a></div>
+</div></main>
+<footer class="footer"><div class="wrap footer-inner"><div>© 2026 NekoFlash · Apache-2.0.</div><div><a href="https://github.com/Ncorror/NekoFlash">GitHub</a></div></div></footer>
+</body>
+</html>
