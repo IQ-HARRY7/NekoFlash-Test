@@ -1391,6 +1391,127 @@ class AdbProtocol(
         return runShellCommandForResult(cleanCommand, logOutput = true, forceLegacy = forceLegacy).success
     }
 
+    /** Outcome of [runShellCommandToFile]. */
+    data class ShellFileResult(
+        /** The command itself finished normally (exit code 0, or a clean close on legacy shell). */
+        val success: Boolean,
+        val cancelled: Boolean,
+        /** True when [outputFile] now holds the captured output (also for partial output). */
+        val fileSaved: Boolean,
+        val bytes: Long,
+        val elapsedMs: Long,
+        val exitCode: Int?
+    )
+
+    /** Writes raw shell stdout to a file and reports throttled progress. Owned by one call. */
+    private class ShellFileSink(
+        private val raf: RandomAccessFile,
+        private val onBytes: (Long) -> Unit
+    ) {
+        var bytes: Long = 0L
+            private set
+
+        fun write(data: ByteArray) {
+            raf.write(data)
+            bytes += data.size.toLong()
+            onBytes(bytes)
+        }
+    }
+
+    /**
+     * `adb shell <command> > file` / `>> file`: runs the command on the target and saves its
+     * stdout on THIS device, using the same contract as [pullFileSingle] (temp `.part` file,
+     * fsync, then replace). Output is streamed to disk as it arrives, so long-running commands
+     * such as `logcat` do not grow in memory and binary output stays byte-exact on shell v2.
+     *
+     * Partial output is kept when the run is cancelled or ends early: stopping `logcat` is the
+     * normal way to finish it, exactly like Ctrl+C with a desktop `>`. A run that produced nothing
+     * and did not succeed leaves any existing target file untouched.
+     */
+    fun runShellCommandToFile(command: String, outputFile: File, append: Boolean): ShellFileResult {
+        val startedNs = System.nanoTime()
+        fun elapsedMs() = (System.nanoTime() - startedNs) / 1_000_000L
+        fun failed() = ShellFileResult(false, false, false, 0L, elapsedMs(), null)
+
+        if (!isConnected) return failed()
+        cancelled = false
+
+        val cleanCommand = command.trim()
+        if (cleanCommand.isBlank()) {
+            onLog("❌ adb shell > file: there is no command to run")
+            return failed()
+        }
+        val parent = outputFile.parentFile
+        if (parent != null && !parent.exists() && !parent.mkdirs()) {
+            onLog("❌ adb shell > file: could not create folder: ${parent.absolutePath}")
+            return failed()
+        }
+
+        // ">>" writes straight into the target; ">" builds a .part file and replaces on finish.
+        val writeFile = if (append) outputFile else File(outputFile.absolutePath + ".part")
+        onLog("📥 Saving output of 'adb shell $cleanCommand' → ${outputFile.absolutePath}")
+        if (!supportsShellV2) {
+            onLog("⚠️ Legacy adb shell: line endings may be converted to CRLF and binary output is not reliable")
+        }
+
+        var lastUiMs = 0L
+        var lastLogMs = 0L
+        var result: ShellResult? = null
+        var bytes = 0L
+        try {
+            RandomAccessFile(writeFile, "rw").use { raf ->
+                if (append) raf.seek(raf.length()) else raf.setLength(0)
+                val sink = ShellFileSink(raf) { total ->
+                    val now = elapsedMs()
+                    if (now - lastUiMs >= DiagnosticLogPolicy.uiProgressIntervalMs()) {
+                        lastUiMs = now
+                        onProgress(-1, "📥 ${ShellOutputRedirect.formatSize(total)} saved · ${ShellOutputRedirect.formatElapsed(now)}")
+                    }
+                    if (now - lastLogMs >= DiagnosticLogPolicy.progressLogIntervalMs(debugLogging = false)) {
+                        lastLogMs = now
+                        onLog("📥 adb shell output: ${ShellOutputRedirect.formatSize(total)} received · ${ShellOutputRedirect.formatElapsed(now)}")
+                    }
+                }
+                result = runShellCommandForResult(cleanCommand, logOutput = true, stdoutSink = sink)
+                bytes = sink.bytes
+                raf.fd.sync()
+            }
+        } catch (e: Exception) {
+            // Disk full, storage revoked, file not writable, ...
+            onLog("❌ adb shell > file: could not write ${writeFile.absolutePath}: ${e.message ?: e.javaClass.simpleName}")
+            if (!append) runCatching { writeFile.delete() }
+            return ShellFileResult(false, cancelled, false, bytes, elapsedMs(), null)
+        }
+
+        val shell = result ?: return failed()
+        val wasCancelled = cancelled
+        val keep = append || bytes > 0L || shell.success
+        var saved = keep
+        if (!append) {
+            if (!keep) {
+                runCatching { writeFile.delete() }
+            } else if ((outputFile.exists() && !outputFile.delete()) || !writeFile.renameTo(outputFile)) {
+                onLog("❌ adb shell > file: could not save file: ${outputFile.absolutePath}")
+                runCatching { writeFile.delete() }
+                saved = false
+            }
+        }
+
+        val elapsed = elapsedMs()
+        val summary = "${ShellOutputRedirect.formatSize(bytes)} in ${ShellOutputRedirect.formatElapsed(elapsed)} → ${outputFile.absolutePath}"
+        val exitNote = shell.exitCode?.let { " (exit code $it)" }.orEmpty()
+        when {
+            !keep && wasCancelled -> onLog("ℹ️ Stopped before any output arrived, so no file was written")
+            !keep -> onLog("ℹ️ Nothing was received, so no file was written")
+            !saved -> Unit // the save error was already logged above
+            wasCancelled -> onLog("⚠️ Stopped by you - partial output kept: $summary")
+            !shell.success -> onLog("⚠️ Capture ended early$exitNote - output kept: $summary")
+            bytes == 0L -> onLog("ℹ️ The command finished without output - saved an empty file: ${outputFile.absolutePath}")
+            else -> onLog("✅ Saved $summary")
+        }
+        return ShellFileResult(shell.success && saved, wasCancelled, saved, bytes, elapsed, shell.exitCode)
+    }
+
     fun sendInteractiveShellInput(line: String): Boolean {
         val payload = (line + "\n").toByteArray(Charsets.UTF_8)
         val accepted = queueInteractiveShellBytes(payload)
@@ -1677,23 +1798,28 @@ class AdbProtocol(
     private fun runShellCommandForResult(
         command: String,
         logOutput: Boolean = true,
-        forceLegacy: Boolean = false
+        forceLegacy: Boolean = false,
+        stdoutSink: ShellFileSink? = null
     ): ShellResult {
         val cleanCommand = command.trim()
         return if (!forceLegacy && supportsShellV2) {
-            runShellV2ForResult(cleanCommand, logOutput)
+            runShellV2ForResult(cleanCommand, logOutput, stdoutSink)
         } else {
             if (logOutput) onLog("ℹ️ adb shell legacy: exit code is unavailable on this device/mode")
-            runLegacyShellForResult(cleanCommand, logOutput)
+            runLegacyShellForResult(cleanCommand, logOutput, stdoutSink)
         }
     }
 
-    private fun runShellV2ForResult(command: String, logOutput: Boolean): ShellResult {
+    private fun runShellV2ForResult(
+        command: String,
+        logOutput: Boolean,
+        stdoutSink: ShellFileSink? = null
+    ): ShellResult {
         val service = "shell,v2,raw:$command"
         if (logOutput) onLog("-> adb shell/v2: $command")
         val stream = openAdbStream(service, logOpen = false) ?: run {
             if (logOutput) onLog("⚠️ shell_v2 could not open; trying legacy shell")
-            return runShellCommandForResult(command, logOutput = logOutput, forceLegacy = true)
+            return runShellCommandForResult(command, logOutput = logOutput, forceLegacy = true, stdoutSink = stdoutSink)
         }
 
         val stdout = StringBuilder()
@@ -1711,9 +1837,14 @@ class AdbProtocol(
                     SHELL_ID_STDOUT -> {
                         val data = readAdbStreamExact(stream, header.length)
                             ?: return ShellResult(stdout.toString(), stderr.toString(), exitCode, false)
-                        val text = data.toShellText()
-                        stdout.append(text)
-                        if (logOutput) logShellOutput(data, isStderr = false)
+                        if (stdoutSink != null) {
+                            // Redirected (adb ... > file): raw bytes go straight to the file, never to RAM or Console.
+                            stdoutSink.write(data)
+                        } else {
+                            val text = data.toShellText()
+                            stdout.append(text)
+                            if (logOutput) logShellOutput(data, isStderr = false)
+                        }
                     }
                     SHELL_ID_STDERR -> {
                         val data = readAdbStreamExact(stream, header.length)
@@ -1751,7 +1882,11 @@ class AdbProtocol(
         return ShellResult(stdout.toString(), stderr.toString(), exitCode, exitCode == 0)
     }
 
-    private fun runLegacyShellForResult(command: String, logOutput: Boolean): ShellResult {
+    private fun runLegacyShellForResult(
+        command: String,
+        logOutput: Boolean,
+        stdoutSink: ShellFileSink? = null
+    ): ShellResult {
         if (logOutput) onLog("-> adb shell: $command")
         val stream = openAdbStream("shell:$command", logOpen = false)
             ?: return ShellResult("", "", null, false)
@@ -1764,9 +1899,13 @@ class AdbProtocol(
                         stream.remoteId = header.arg0
                         val data = readData(header.dataLength) ?: return ShellResult(stdout.toString(), "", null, false)
                         sendMessageInternal(A_OKAY, stream.localId, stream.remoteId, EMPTY_PAYLOAD)
-                        val text = data.toShellText()
-                        stdout.append(text)
-                        if (logOutput) logShellOutput(data, isStderr = false)
+                        if (stdoutSink != null) {
+                            stdoutSink.write(data)
+                        } else {
+                            val text = data.toShellText()
+                            stdout.append(text)
+                            if (logOutput) logShellOutput(data, isStderr = false)
+                        }
                     }
                     A_OKAY -> {
                         if (header.dataLength > 0) readData(header.dataLength)

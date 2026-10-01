@@ -190,6 +190,7 @@ class MainActivity : AppCompatActivity() {
         data class FastbootFetch(val partition: String, val outputFile: File, val slot: String? = null) : TerminalAction()
         data class AdbService(val service: String) : TerminalAction()
         data class AdbShell(val command: String) : TerminalAction()
+        data class AdbShellToFile(val command: String, val outputFile: File, val append: Boolean) : TerminalAction()
         data class AdbPush(val localFile: File, val remotePath: String) : TerminalAction()
         data class AdbPull(val remotePath: String, val localFile: File) : TerminalAction()
         data class AdbInstall(val packageFile: File, val options: List<String>) : TerminalAction()
@@ -948,6 +949,7 @@ class MainActivity : AppCompatActivity() {
             is TerminalAction.FastbootFetch -> viewModel.runFastbootFetch(action.partition, action.outputFile, action.slot)
             is TerminalAction.AdbService,
             is TerminalAction.AdbShell,
+            is TerminalAction.AdbShellToFile,
             is TerminalAction.AdbPush,
             is TerminalAction.AdbPull,
             is TerminalAction.AdbInstall,
@@ -979,6 +981,16 @@ class MainActivity : AppCompatActivity() {
                     )
                 } else {
                     viewModel.runAdbShell(action.command)
+                }
+            }
+            is TerminalAction.AdbShellToFile -> {
+                if (viewModel.adbProtocol?.isConnected != true) {
+                    viewModel.log(
+                        DiagnosticLogPolicy.Level.ERROR,
+                        "ERROR: ADB device is not connected. Command was not sent."
+                    )
+                } else {
+                    viewModel.runAdbShellToFile(action.command, action.outputFile, action.append)
                 }
             }
             is TerminalAction.AdbPush -> viewModel.runAdbPush(action.localFile, action.remotePath)
@@ -1255,6 +1267,13 @@ class MainActivity : AppCompatActivity() {
 
         if (warnIfBatchOrShellSyntax(op, clean, isAdbTab = true)) return null
 
+        // "adb logcat > file.txt": an unquoted > / >> saves the command output on this phone.
+        when (val redirect = ShellOutputRedirect.parse(clean)) {
+            is ShellOutputRedirect.Result.Invalid -> return invalidTerminalFormat(redirect.message)
+            is ShellOutputRedirect.Result.Found -> return parseAdbRedirect(redirect.redirect)
+            ShellOutputRedirect.Result.None -> Unit
+        }
+
         return when (op) {
             "status", "devices", "get-state" -> TerminalAction.LocalStatus
             "reports", "open-reports", "report-folder", "reports-folder" -> TerminalAction.OpenReportsFolder
@@ -1352,6 +1371,39 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    /**
+     * Turns `adb <shell command> > file` into [TerminalAction.AdbShellToFile]. The command itself
+     * is classified by [parseAdbCommand] (so every existing shell shortcut keeps working) and the
+     * file is resolved by [resolveTerminalOutputFile], i.e. the same workspace folder, folder
+     * creation and absolute/relative path rules as adb pull.
+     */
+    private fun parseAdbRedirect(redirect: ShellOutputRedirect.Redirect): TerminalAction? {
+        if (redirect.command.isBlank()) {
+            return invalidTerminalFormat("adb <command> > file.txt, for example adb logcat -d > logcat.txt")
+        }
+        val inner = parseAdbCommand(redirect.command) ?: return null
+        if (inner !is TerminalAction.AdbShell) {
+            viewModel.log("❌ Saving output with > works for shell commands only (adb logcat, adb shell <command>). Use adb pull to copy files.")
+            return null
+        }
+        if (inner.command.isBlank()) {
+            viewModel.log("❌ An interactive shell cannot be saved to a file. Use: adb shell <command> > file.txt")
+            return null
+        }
+        val outputFile = resolveTerminalOutputFile(redirect.target, "adb-output.txt") ?: return null
+
+        val words = inner.command.trim().split(Regex("\\s+"))
+        if (words.firstOrNull().equals("logcat", ignoreCase = true) &&
+            words.none { it == "-d" || it == "-t" || it == "-g" || it == "-c" || it == "-S" }
+        ) {
+            viewModel.log("💡 logcat keeps streaming until you tap Cancel, and what was captured is saved when you stop. Add -d to save a one-time dump instead.")
+        }
+        if (redirect.command.trimStart().startsWith("shell", ignoreCase = true)) {
+            viewModel.log("💡 Output is saved on this phone. To redirect on the target device instead, use: adb shell sh -c \"command > /sdcard/file\"")
+        }
+        return TerminalAction.AdbShellToFile(inner.command, outputFile, redirect.append)
+    }
 
     private fun parseAdbInstallMultiple(tokens: List<String>): TerminalAction? {
         if (tokens.size < 3) return invalidTerminalFormat("adb install-multiple [-r] [-d] [-g] <base.apk> <split1.apk> [split2.apk...]")

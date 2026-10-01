@@ -67,6 +67,9 @@ class DeviceViewModel(
 
         fun verificationPending(message: String): Nothing =
             throw OperationAbort(OperationOutcome.VerifyPending(message))
+
+        fun cancelOperation(message: String): Nothing =
+            throw OperationAbort(OperationOutcome.Cancelled(message))
     }
 
     data class OperationStep(
@@ -1105,6 +1108,36 @@ class DeviceViewModel(
             val proto = adbProtocol ?: failOperation(text(R.string.error_no_adb))
             if (!proto.isConnected) failOperation(text(R.string.error_no_adb))
             if (!proto.runShellCommand(command)) failOperation("ADB shell failed: $label")
+        }
+    }
+
+    /**
+     * `adb <shell command> > file`: one-shot shell command whose stdout is saved on this phone
+     * (same workspace folder as adb pull). Heavy on purpose: long captures such as logcat keep the
+     * wake lock / foreground service alive and can be stopped from the Operation Center; stopping
+     * keeps the partial output, like Ctrl+C with a desktop redirect.
+     */
+    fun runAdbShellToFile(command: String, outputFile: File, append: Boolean) {
+        val label = "shell $command > ${outputFile.name}"
+        startOperation(text(R.string.notif_adb_command), text(R.string.notif_executing, label)) {
+            val proto = adbProtocol ?: failOperation(text(R.string.error_no_adb))
+            if (!proto.isConnected) failOperation(text(R.string.error_no_adb))
+            val result = proto.runShellCommandToFile(command, outputFile, append)
+            val saved = "${ShellOutputRedirect.formatSize(result.bytes)} in " +
+                "${ShellOutputRedirect.formatElapsed(result.elapsedMs)} → ${outputFile.absolutePath}"
+            when {
+                result.cancelled && result.fileSaved -> cancelOperation("Stopped - partial output saved: $saved")
+                result.cancelled -> cancelOperation("Stopped before any output arrived")
+                !result.success && result.fileSaved -> failOperation("Capture ended early - partial output saved: $saved")
+                !result.success -> failOperation("ADB shell failed: $label")
+                else -> _operationProgress.postValue(
+                    OperationProgress(
+                        title = text(R.string.notif_adb_command),
+                        percent = 100,
+                        detail = "✅ Saved $saved"
+                    )
+                )
+            }
         }
     }
 
